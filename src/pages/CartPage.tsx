@@ -138,8 +138,8 @@ const CartPage: React.FC = () => {
 
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 8 }}>
-      <Typography variant="h4" gutterBottom>
+    <Container maxWidth="lg" sx={{ mt: 2, mb: 8 }}>
+      <Typography variant="h4" gutterBottom sx={{ mt: -3, mb: 1 }}>
         Shopping Cart
       </Typography>
       
