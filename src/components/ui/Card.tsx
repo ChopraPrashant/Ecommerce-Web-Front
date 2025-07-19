@@ -68,7 +68,8 @@ const StyledCard = styled(MuiCard, {
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
-    borderRadius: square ? 0 : theme.shape.borderRadius,
+    border: `1px solid ${theme.palette.divider}`,
+    borderRadius: square ? 0 : Number(theme.shape.borderRadius) * 2,
     transition: theme.transitions.create(['box-shadow', 'transform'], {
       duration: theme.transitions.duration.shorter,
     }),
