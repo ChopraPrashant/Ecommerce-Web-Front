@@ -112,16 +112,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const theme = useTheme();
   const navigate = useNavigate();
   
-  const handleProductClick = (e?: React.MouseEvent) => {
-    if (e) {
-      // Don't navigate if the click was on a button or link
-      const target = e.target as HTMLElement;
-      if (target.closest('button, a, [role="button"]')) {
-        return;
-      }
-    }
-    navigate(`/products/${product._id}`);
-  };
+  // Click handler removed as per requirements
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -364,7 +355,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             },
             ...sx,
           }}
-          onClick={() => handleProductClick()}
+
         >
           <Box
             sx={{
@@ -386,39 +377,22 @@ const ProductCard: React.FC<ProductCardProps> = ({
   }
 
   return (
-    <Box
-      component="div"
-      onClick={handleProductClick}
+    <Card
       sx={{
         height: '100%',
-        cursor: 'pointer',
+        display: 'flex',
+        flexDirection: 'column',
+        transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
         '&:hover': {
-          '& .MuiCard-root': {
-            boxShadow: (theme: any) => theme.shadows[8],
-            transform: 'translateY(-4px)',
-          }
+          transform: 'translateY(-4px)',
+          boxShadow: 3,
         },
         ...sx,
       }}
     >
-      <Card
-        variant="outlined"
-        sx={{
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          transition: 'box-shadow 0.3s ease, transform 0.2s ease',
-          position: 'relative',
-          '&:hover': {
-            boxShadow: (theme: any) => theme.shadows[8],
-            transform: 'translateY(-4px)',
-          },
-        }}
-      >
-        {renderImage()}
-        {renderContent()}
-      </Card>
-    </Box>
+      {renderImage()}
+      {renderContent()}
+    </Card>
   );
 };
 

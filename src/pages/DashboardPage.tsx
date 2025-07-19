@@ -403,7 +403,6 @@ const DashboardPage: React.FC = () => {
                 sx={{ 
                   minWidth: 200, 
                   flexShrink: 0,
-                  cursor: 'pointer',
                   transition: 'transform 0.2s',
                   '&:hover': {
                     transform: 'translateY(-4px)',
@@ -421,10 +420,8 @@ const DashboardPage: React.FC = () => {
                         width: product.id === '1' ? '120%' : 'auto',
                         maxWidth: product.id === '1' ? '120%' : '100%',
                         objectFit: 'contain', 
-                        cursor: 'pointer',
                         margin: product.id === '1' ? '0 -10%' : '0'
                       }}
-                      onClick={() => navigate(`/products/${product.id}`)}
                     />
                   </Box>
                   <IconButton
