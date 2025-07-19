@@ -59,16 +59,18 @@ const ProductActions = styled(Box)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   padding: theme.spacing(1),
-  background: 'rgba(255, 255, 255, 0.9)',
+  background: 'rgba(255, 255, 255, 0.95)',
   opacity: 0,
   transform: 'translateY(10px)',
   transition: 'all 0.3s ease-in-out',
   gap: theme.spacing(1),
   '& > *': {
     minWidth: 'auto',
-    padding: theme.spacing(1),
+    padding: theme.spacing(1.5),
+    borderRadius: theme.shape.borderRadius,
     '&:hover': {
-      backgroundColor: theme.palette.action.hover,
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText,
     },
   },
 }));
@@ -110,8 +112,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const theme = useTheme();
   const navigate = useNavigate();
   
-  const handleProductClick = () => {
-    navigate(`/products/${product.slug || product._id}`);
+  const handleProductClick = (e?: React.MouseEvent) => {
+    if (e) {
+      // Don't navigate if the click was on a button or link
+      const target = e.target as HTMLElement;
+      if (target.closest('button, a, [role="button"]')) {
+        return;
+      }
+    }
+    navigate(`/products/${product._id}`);
   };
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -147,7 +156,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
             style={{
               width: '100%',
               height: variant === 'grid' ? '200px' : '240px',
-              objectFit: 'cover',
+              objectFit: 'contain',
+              padding: '10px',
+              boxSizing: 'border-box'
             }}
             loading="lazy"
           />
@@ -167,35 +178,39 @@ const ProductCard: React.FC<ProductCardProps> = ({
             inStock={product.stock > 0}
             label={product.stock > 0 ? 'In Stock' : 'Out of Stock'}
           />
-          {showActions && (
-            <ProductActions className="product-actions">
-              <Button
-                size="small"
-                color="primary"
-                variant="contained"
-                startIcon={isInCart ? <ShoppingCart /> : <ShoppingCart />}
-                onClick={handleAddToCart}
-                disabled={product.stock === 0 || isInCart}
-              >
-                {isInCart ? 'In Cart' : 'Add to Cart'}
-              </Button>
-              <Button
-                size="small"
-                color="secondary"
-                variant="outlined"
-                onClick={handleToggleWishlist}
-              >
-                {isInWishlist ? <Favorite color="error" /> : <FavoriteBorder />}
-              </Button>
-              <Button
-                size="small"
-                variant="outlined"
-                onClick={handleQuickView}
-              >
-                <Visibility />
-              </Button>
-            </ProductActions>
-          )}
+          <ProductActions className="product-actions" sx={{ 
+            display: showActions ? 'flex' : 'none',
+            '&:hover': {
+              opacity: 1,
+              transform: 'translateY(0)',
+            }
+          }}>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              size="small"
+              startIcon={<ShoppingCart />}
+              onClick={handleAddToCart}
+              disabled={product.stock === 0 || isInCart}
+              sx={{
+                transition: 'all 0.2s',
+                '&:hover': {
+                  transform: 'scale(1.02)',
+                  boxShadow: 2,
+                },
+                '&:active': {
+                  transform: 'scale(0.98)',
+                },
+                '&.Mui-disabled': {
+                  backgroundColor: 'action.disabledBackground',
+                  color: 'text.disabled',
+                },
+              }}
+            >
+              {isInCart ? 'In Cart' : 'Add to Cart'}
+            </Button>
+          </ProductActions>
         </>
       )}
     </ProductImageWrapper>
@@ -211,74 +226,87 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </>
       ) : (
         <>
-          <Typography
-            variant="subtitle1"
-            component="h3"
-            sx={{
-              fontWeight: 500,
-              mb: 0.5,
-              display: '-webkit-box',
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              minHeight: '3em',
-            }}
-          >
-            {product.name}
-          </Typography>
-          
-          {product.brand && (
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
             <Typography
-              variant="caption"
-              color="text.secondary"
+              variant="subtitle1"
+              component="h3"
               sx={{
-                display: 'block',
-                mb: 0.5,
-                textTransform: 'uppercase',
-                letterSpacing: '0.5px',
-                fontWeight: 500,
+                fontWeight: 'bold',
+                mb: 0,
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                minHeight: '3em',
               }}
             >
-              {product.brand.name}
+              {product.name}
             </Typography>
-          )}
-          
-          <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-            <Rating
-              value={product.averageRating || product.rating || 0}
-              precision={0.5}
-              readOnly
-              size="small"
-            />
-            <Typography variant="caption" color="text.secondary">
-              ({product.numReviews || product.reviewCount || 0} reviews)
-            </Typography>
-          </Box>
-          
-          <Box sx={{ mt: 'auto' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+            
+            {product.brand && (
               <Typography
-                variant="h6"
-                component="span"
-                color="primary"
-                sx={{ fontWeight: 'bold' }}
+                variant="caption"
+                color="text.secondary"
+                sx={{
+                  display: 'block',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                  fontWeight: 500,
+                  lineHeight: 1.2,
+                  mt: '-2px',
+                  mb: 0,
+                  fontSize: '0.8rem'
+                }}
               >
-                {formatCurrency(product.price)}
+                {product.brand.name}
               </Typography>
-              {(product.onSale || product.discountPercentage) && product.originalPrice && (
+            )}
+            
+            {product.shortDescription && variant === 'grid' && (
+              <Box sx={{ mt: 0.5 }}>
                 <Typography
-                  variant="body2"
-                  color="text.disabled"
+                  variant="caption"
+                  color="text.secondary"
                   sx={{
-                    textDecoration: 'line-through',
-                    ml: 1,
+                    display: '-webkit-box',
+                    fontSize: '0.8rem',
+                    lineHeight: 1.3,
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden',
                   }}
                 >
-                  {formatCurrency(product.originalPrice)}
+                  {product.shortDescription}
                 </Typography>
-              )}
-            </Box>
+              </Box>
+            )}
+          </Box>
+          
+          <Box sx={{ mt: 2 }}>
+            <Typography
+              variant="h6"
+              component="div"
+              color="primary"
+              sx={{ fontWeight: 'bold', mb: 0.5 }}
+            >
+              {formatCurrency(product.price)}
+            </Typography>
+            {product.originalPrice && product.originalPrice > product.price && (
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+              >
+                <span>MRP:</span>
+                <span style={{ textDecoration: 'line-through' }}>
+                  {formatCurrency(product.originalPrice)}
+                </span>
+                <span style={{ color: 'error.main', marginLeft: 1 }}>
+                  ({Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% OFF)
+                </span>
+              </Typography>
+            )}
             
             {variant === 'list' && product.stock > 0 && (
               <Typography variant="caption" color="success.main" display="block">
@@ -296,6 +324,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                   WebkitLineClamp: 3,
                   WebkitBoxOrient: 'vertical',
                   overflow: 'hidden',
+                  fontSize: '0.875rem',
                 }}
               >
                 {product.shortDescription}
@@ -335,7 +364,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             },
             ...sx,
           }}
-          onClick={handleProductClick}
+          onClick={() => handleProductClick()}
         >
           <Box
             sx={{
@@ -357,24 +386,39 @@ const ProductCard: React.FC<ProductCardProps> = ({
   }
 
   return (
-    <StyledProductCard variant={variant} sx={sx}>
+    <Box
+      component="div"
+      onClick={handleProductClick}
+      sx={{
+        height: '100%',
+        cursor: 'pointer',
+        '&:hover': {
+          '& .MuiCard-root': {
+            boxShadow: (theme: any) => theme.shadows[8],
+            transform: 'translateY(-4px)',
+          }
+        },
+        ...sx,
+      }}
+    >
       <Card
         variant="outlined"
         sx={{
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
+          transition: 'box-shadow 0.3s ease, transform 0.2s ease',
+          position: 'relative',
           '&:hover': {
-            boxShadow: (theme: any) => theme.shadows[4],
-            cursor: 'pointer',
+            boxShadow: (theme: any) => theme.shadows[8],
+            transform: 'translateY(-4px)',
           },
         }}
-        onClick={handleProductClick}
       >
         {renderImage()}
         {renderContent()}
       </Card>
-    </StyledProductCard>
+    </Box>
   );
 };
 

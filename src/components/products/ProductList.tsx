@@ -21,6 +21,7 @@ interface ProductListProps {
   loadingCount?: number;
   showPagination?: boolean;
   emptyMessage?: string;
+  isInCart?: (productId: string) => boolean;
   sx?: any;
 }
 
@@ -86,6 +87,7 @@ const ProductList: React.FC<ProductListProps> = ({
   loadingCount = 12,
   showPagination = true,
   emptyMessage = 'No products found',
+  isInCart,
   sx,
 }) => {
   const theme = useTheme();
@@ -189,14 +191,14 @@ const ProductList: React.FC<ProductListProps> = ({
     }
 
     return products.map((product) => (
-      <Box key={product._id}>
+      <Box key={product._id} sx={{ height: '100%' }}>
         <ProductCard
           product={product}
           onAddToCart={onAddToCart}
           onToggleWishlist={onToggleWishlist}
           onQuickView={onQuickView}
           isInWishlist={wishlistItems?.includes(product._id) || false}
-          isInCart={cartItems?.includes(product._id) || false}
+          isInCart={isInCart ? isInCart(product._id) : (cartItems?.includes(product._id) || false)}
           variant={viewMode}
         />
       </Box>

@@ -103,11 +103,11 @@ export interface IProduct {
   variants: IProductVariant[];
   attributes: IProductAttribute[];
   reviews: IProductReview[];
-  rating: number;
+  rating?: number;
   averageRating?: number;
-  reviewCount: number;
+  reviewCount?: number;
   numReviews?: number;
-  isFeatured: boolean;
+  isFeatured?: boolean;
   isActive: boolean;
   onSale?: boolean;
   metaTitle?: string;

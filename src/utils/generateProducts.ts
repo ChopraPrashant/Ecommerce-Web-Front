@@ -10,88 +10,163 @@ const categories = [
 const brands = [
   { 
     _id: 'brand1', 
-    name: 'Crompton Greaves',
-    slug: 'crompton-greaves',
-    description: 'Leading electrical equipment manufacturer'
+    name: 'Crompton',
+    slug: 'crompton',
+    description: 'Leading electrical equipment manufacturer',
+    logo: '/images/brands/crompton.png'
   },
   { 
     _id: 'brand2', 
     name: 'Kirloskar',
     slug: 'kirloskar',
-    description: 'Trusted brand for pumps and motors'
+    description: 'Trusted brand for pumps and motors',
+    logo: '/images/brands/kirloskar.png'
   },
   { 
     _id: 'brand3', 
     name: 'Bharat Bijlee',
     slug: 'bharat-bijlee',
-    description: 'Premium electrical equipment manufacturer'
+    description: 'Premium electrical equipment manufacturer',
+    logo: '/images/brands/bharat-bijlee.png'
   },
   { 
     _id: 'brand4', 
     name: 'L&T',
     slug: 'lnt',
-    description: 'Multinational conglomerate with electrical division'
+    description: 'Multinational conglomerate with electrical division',
+    logo: '/images/brands/lnt.png'
+  },
+  { 
+    _id: 'brand5', 
+    name: 'Havells',
+    slug: 'havells',
+    description: 'Leading electrical equipment company',
+    logo: '/images/brands/havells.png'
+  },
+  { 
+    _id: 'brand6', 
+    name: 'Orient Electric',
+    slug: 'orient-electric',
+    description: 'Trusted name in electrical appliances',
+    logo: '/images/brands/orient.png'
   }
 ];
 
-const generateProduct = (name: string, categoryIndex: number, basePrice: number, count: number): IProduct[] => {
-  return Array.from({ length: count }, (_, i) => {
-    // Check if this is the 13th cable product (index 12 since arrays are 0-based)
-    const is13thCable = name.toLowerCase() === 'cable' && i === 12;
-    
-    return {
-      _id: `p-${is13thCable ? 'cable-13' : uuidv4()}`,
-      name: is13thCable ? 'Premium Industrial Cable' : `${name} ${i + 1}`,
-      slug: is13thCable ? 'premium-industrial-cable' : `${name.toLowerCase().replace(/\s+/g, '-')}-${i + 1}`,
-      description: is13thCable 
-        ? 'High-quality premium industrial cable with enhanced durability and performance. Ideal for heavy-duty applications.'
-        : `High-quality ${name.toLowerCase()} model ${i + 1}.`,
-      shortDescription: is13thCable 
-        ? 'Premium cable for industrial use' 
-        : `Model ${i + 1} with premium features`,
-      price: is13thCable ? 1500 : basePrice + (i * 500),
-      originalPrice: is13thCable ? 1800 : basePrice + 1000 + (i * 500),
-      discountPercentage: is13thCable ? 17 : Math.floor(Math.random() * 20) + 5,
-      stock: is13thCable ? 25 : Math.floor(Math.random() * 50) + 10,
-      sku: is13thCable ? 'CABLE-PREM-13' : `SKU-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
-      images: [
-        { 
-          url: is13thCable 
-            ? '/images/products/cable-premium.jpg' 
-            : `/images/products/${categories[categoryIndex].slug}-${(i % 3) + 1}.jpg`, 
-          alt: is13thCable ? 'Premium Industrial Cable' : `${name} ${i + 1}`, 
-          isPrimary: true 
-        },
-      ],
-      categories: [categories[categoryIndex]],
-      brand: is13thCable 
-        ? { _id: 'brand4', name: 'L&T', slug: 'lnt', description: 'Multinational conglomerate with electrical division' }
-        : brands[Math.floor(Math.random() * brands.length)],
-      tags: is13thCable ? ['premium', 'industrial', 'heavy-duty', 'best-seller'] : [],
-      variants: [],
-      attributes: is13thCable ? [
-        { name: 'Length', values: ['100m', '200m', '500m'], isVariant: true, isFilterable: true },
-        { name: 'Color', values: ['Black', 'Red', 'Blue'], isVariant: true, isFilterable: true },
-        { name: 'Voltage', values: ['110V', '220V', '440V'], isVariant: false, isFilterable: true }
-      ] : [],
-      reviews: [],
-      rating: is13thCable ? 4.8 : Math.floor(Math.random() * 2) + 3.5, // 3.5 - 5.5
-      averageRating: is13thCable ? 4.8 : Math.floor(Math.random() * 2) + 3.5,
-      reviewCount: is13thCable ? 42 : Math.floor(Math.random() * 100),
-      numReviews: is13thCable ? 42 : Math.floor(Math.random() * 100),
-      isFeatured: is13thCable ? true : Math.random() > 0.7,
-      isActive: true,
-      onSale: is13thCable ? true : Math.random() > 0.3,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-  });
+const createProduct = (productData: Partial<IProduct>): IProduct => {
+  const baseProduct: IProduct = {
+    _id: uuidv4(),
+    name: '',
+    slug: '',
+    description: '',
+    shortDescription: '',
+    sku: '',
+    price: 0,
+    originalPrice: 0,
+    stock: 0,
+    images: [],
+    categories: [],
+    brand: brands[0],
+    tags: [],
+    variants: [],
+    attributes: [],
+    reviews: [],
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  };
+
+  return { ...baseProduct, ...productData };
 };
 
-export const generateProducts = () => {
-  const waterPumps = generateProduct('Water Pump', 0, 5000, 12);
-  const motors = generateProduct('Induction Motor', 1, 8000, 10);
-  const cables = generateProduct('Cable', 2, 1000, 15);
-  
-  return [...waterPumps, ...motors, ...cables];
+// Water Pumps
+const waterPumps: IProduct[] = [
+  createProduct({
+    name: 'Crompton Nile Plus I',
+    slug: 'crompton-nile-plus-1',
+    description: 'High efficiency self-priming water pump with max head of 25 meters and max discharge of 2400 LPH. Features thermal overload protection and rust-proof body.',
+    shortDescription: 'Mini Self Priming Regenerative Pump 1 HP',
+    sku: 'WP-CROMPTON-NP1',
+    price: 4999,
+    originalPrice: 5850,
+    stock: 15,
+    brand: brands[0],
+    categories: [categories[0]],
+    tags: ['domestic'],
+    images: [
+      { url: '/Nile plus I.png', alt: 'Crompton 1HP Mini Champ', isPrimary: true }
+    ],
+    reviews: []
+  }),
+  createProduct({
+    name: 'Kirloskar Jalraaj Ultra 0.5HP ',
+    slug: 'kirloskar-jalraaj-ultra-0.5hp',
+    description: 'Heavy duty 2HP water pump with max head of 40 meters and max discharge of 3600 LPH. Ideal for agricultural use.',
+    shortDescription: '0.5 HP Domestic Water Supply Pump',
+    sku: 'WP-KIRLOSKAR-0.5HP',
+    price: 12499,
+    originalPrice: 13999,
+    stock: 8,
+    brand: brands[1],
+    categories: [categories[0]],
+    tags: ['agricultural', 'heavy-duty'],
+    images: [
+      { url: '/jalraj.png', alt: 'Kirloskar 2HP Jalraaj', isPrimary: true }
+    ],
+    reviews: []
+  }),
+  // Add 6 more water pumps...
+
+];
+
+// Induction Motors
+const inductionMotors: IProduct[] = [
+  createProduct({
+    name: 'Bharat Bijlee 3HP Induction Motor',
+    slug: 'bharat-bijlee-3hp-induction',
+    description: 'Energy efficient 3HP 3-phase induction motor with IP55 protection. Suitable for industrial applications.',
+    shortDescription: '3HP industrial induction motor',
+    sku: 'MOTOR-BB-3HP',
+    price: 18999,
+    originalPrice: 20999,
+    stock: 5,
+    brand: brands[2],
+    categories: [categories[1]],
+    tags: ['industrial', '3-phase'],
+    images: [
+      { url: '/images/products/motors/bharat-bijlee-3hp.jpg', alt: 'Bharat Bijlee 3HP Motor', isPrimary: true }
+    ],
+    reviews: []
+  }),
+  // Add 7 more induction motors...
+];
+
+// Cables
+const cables: IProduct[] = [
+  createProduct({
+    name: 'L&T 6 Sq.mm 90m FR PVC Cable',
+    slug: 'lnt-6sqmm-fr-pvc-cable',
+    description: '6 Sq.mm 2 Core 90m FR PVC Copper Cable. Fire retardant and suitable for domestic and industrial wiring.',
+    shortDescription: '6 Sq.mm 2 Core FR PVC Cable',
+    sku: 'CABLE-LNT-6SQMM',
+    price: 12500,
+    originalPrice: 13999,
+    stock: 50,
+    brand: brands[3],
+    categories: [categories[2]],
+    tags: ['copper', 'fr-pvc'],
+    images: [
+      { url: '/images/products/cables/lnt-6sqmm.jpg', alt: 'L&T 6 Sq.mm Cable', isPrimary: true }
+    ],
+    reviews: []
+  }),
+  // Add 7 more cables...
+];
+
+export const generateProducts = (): IProduct[] => {
+  // Combine all products
+  return [
+    ...waterPumps.slice(0, 8),      // First 8 water pumps
+    ...inductionMotors.slice(0, 8), // First 8 induction motors
+    ...cables.slice(0, 8)           // First 8 cables
+  ];
 };

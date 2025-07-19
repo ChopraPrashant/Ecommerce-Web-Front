@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../store/store';
+import { addToCart } from '../store/slices/simpleCartSlice';
 import {
   Box,
   Container,
@@ -138,9 +140,35 @@ const ProductsPage: React.FC = () => {
     }));
   }, []);
 
+  const dispatch = useAppDispatch();
+  const cart = useAppSelector((state) => state.cart.cart);
+  
   // Handle add to cart
-  const handleAddToCart = (productId: string) => {
-    console.log('Add to cart:', productId);
+  const handleAddToCart = (product: IProduct) => {
+    // Check if product is in stock
+    if (product.stock <= 0) {
+      // You might want to show a toast/notification here
+      console.warn('Product is out of stock');
+      return;
+    }
+
+    const cartItem = {
+      _id: product._id, // Use product ID as the cart item ID to prevent duplicates
+      product: product._id,
+      name: product.name,
+      price: product.price,
+      quantity: 1,
+      stock: product.stock || 0,
+      sku: product.sku || `SKU-${product._id}`,
+      image: product.images?.[0]?.url || '',
+    };
+    
+    dispatch(addToCart(cartItem));
+  };
+  
+  // Check if product is in cart
+  const isInCart = (productId: string) => {
+    return cart?.items?.some(item => item.product === productId) || false;
   };
 
   // Handle add to wishlist
@@ -295,12 +323,17 @@ const ProductsPage: React.FC = () => {
             products={paginatedProducts}
             loading={false}
             viewMode={viewMode}
-            onAddToCart={handleAddToCart}
+            onAddToCart={(productId) => {
+              const product = paginatedProducts.find(p => p._id === productId);
+              if (product) handleAddToCart(product);
+            }}
+            isInCart={isInCart}
             onToggleWishlist={handleAddToWishlist}
             page={filters.page}
             onPageChange={handlePageChange}
             count={total}
             itemsPerPage={filters.limit}
+            cartItems={cart?.items.map(item => item.product) || []}
           />
         </Box>
       </Box>

@@ -30,17 +30,27 @@ const cartSlice = createSlice({
     // Add to cart
     addToCart: (state, action: PayloadAction<CartItem>) => {
       if (!state.cart) {
+        // Check stock before initializing cart
+        if (action.payload.stock <= 0) {
+          // You might want to handle this error in the UI
+          console.warn('Cannot add out of stock item to cart');
+          return;
+        }
+        
         // Initialize cart if it doesn't exist
         state.cart = {
           _id: 'temp-cart-id',
           user: 'current-user-id',
-          items: [action.payload],
+          items: [{
+            ...action.payload,
+            quantity: 1, // Always set to 1 for new items
+          }],
           totals: {
-            subtotal: action.payload.price * action.payload.quantity,
+            subtotal: action.payload.price * 1, // Quantity is 1 for new items
             discount: 0,
             shipping: 0,
             tax: 0,
-            total: action.payload.price * action.payload.quantity,
+            total: action.payload.price * 1, // Quantity is 1 for new items
             currency: 'INR',
           },
           createdAt: new Date().toISOString(),
@@ -48,45 +58,79 @@ const cartSlice = createSlice({
         };
         return;
       }
-      
-      const existingItem = state.cart.items.find(
-        item => item._id === action.payload._id
+
+      // Check if item already exists in cart (by product ID)
+      const existingItemIndex = state.cart.items.findIndex(
+        (item) => item.product === action.payload.product
       );
-      
-      if (existingItem) {
-        existingItem.quantity += action.payload.quantity || 1;
+
+      if (existingItemIndex >= 0) {
+        // Check if we can add more of this item (don't exceed stock)
+        const existingItem = state.cart.items[existingItemIndex];
+        if (existingItem.quantity >= action.payload.stock) {
+          // You might want to show a toast/notification here
+          console.warn('Cannot add more items: stock limit reached');
+          return;
+        }
+        // Increase quantity by 1 if item exists and stock allows
+        state.cart.items[existingItemIndex].quantity += 1;
       } else {
+        // Add new item with quantity 1 (already checked stock in the component)
         state.cart.items.push({
           ...action.payload,
-          quantity: action.payload.quantity || 1,
+          quantity: 1, // Ensure new items start with quantity 1
         });
       }
-      
-      // Update totals (simplified)
-      state.cart.totals.subtotal = state.cart.items.reduce(
+
+      // Update totals
+      const subtotal = state.cart.items.reduce(
         (sum, item) => sum + (item.price * item.quantity),
         0
       );
-      state.cart.totals.total = state.cart.totals.subtotal;
+
+      state.cart.totals = {
+        ...state.cart.totals,
+        subtotal,
+        total: subtotal - (state.cart.totals?.discount || 0) + (state.cart.totals?.shipping || 0) + (state.cart.totals?.tax || 0),
+      };
+
+      state.cart.updatedAt = new Date().toISOString();
     },
     
     // Update quantity
     updateQuantity: (state, action: PayloadAction<{ id: string; quantity: number }>) => {
       if (!state.cart) return;
       
-      const item = state.cart.items.find(item => item._id === action.payload.id);
+      const { id, quantity } = action.payload;
+      const item = state.cart.items.find(item => item._id === id);
+      
       if (item) {
-        item.quantity = action.payload.quantity;
+        // Don't allow quantity to exceed stock
+        if (quantity > item.stock) {
+          console.warn('Cannot set quantity higher than available stock');
+          return;
+        }
+        
+        // Don't allow quantity less than 1 (use remove instead)
+        if (quantity < 1) {
+          console.warn('Quantity must be at least 1');
+          return;
+        }
+        
+        item.quantity = quantity;
         
         // Update totals
-        if (state.cart) {
-          state.cart.totals.subtotal = state.cart.items.reduce(
-            (sum, item) => sum + (item.price * item.quantity),
-            0
-          );
-          state.cart.totals.total = state.cart.totals.subtotal;
-          state.cart.updatedAt = new Date().toISOString();
-        }
+        const subtotal = state.cart.items.reduce(
+          (sum, item) => sum + (item.price * item.quantity),
+          0
+        );
+        
+        state.cart.totals = {
+          ...state.cart.totals,
+          subtotal,
+          total: subtotal - (state.cart.totals?.discount || 0) + (state.cart.totals?.shipping || 0) + (state.cart.totals?.tax || 0),
+        };
+        state.cart.updatedAt = new Date().toISOString();
       }
     },
     
