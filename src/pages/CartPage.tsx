@@ -282,9 +282,52 @@ const CartPage: React.FC = () => {
               size="large"
               fullWidth
               onClick={() => {}}
+              sx={{ mb: 1 }}
             >
               Proceed to Checkout
             </Button>
+            <Box 
+              sx={{ 
+                textAlign: 'center',
+                mt: 2,
+                p: 2,
+                backgroundColor: 'rgba(25, 118, 210, 0.08)',
+                borderRadius: 1,
+                borderLeft: '4px solid',
+                borderColor: 'primary.main',
+                '&:hover': {
+                  backgroundColor: 'rgba(25, 118, 210, 0.12)',
+                }
+              }}
+            >
+              <Typography 
+                variant="h6"
+                color="primary"
+                sx={{ 
+                  fontWeight: 'bold',
+                  mb: 0.5,
+                }}
+              >
+                Looking for a Better Deal?
+              </Typography>
+              <Typography 
+                variant="subtitle1"
+                color="primary"
+                sx={{ 
+                  fontWeight: 'medium',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 1,
+                  cursor: 'pointer',
+                  '&:hover': {
+                    textDecoration: 'underline',
+                  }
+                }}
+              >
+                Contact Us Now for Exclusive Discounts!
+              </Typography>
+            </Box>
           </Box>
         </Box>
       </Paper>
