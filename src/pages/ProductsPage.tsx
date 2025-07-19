@@ -150,7 +150,7 @@ const ProductsPage: React.FC = () => {
 
   return (
     <Container maxWidth="xl" sx={{ pt: 0, pb: 0 }}>
-      <Box>
+      <Box sx={{ mt: -2 }}>
         {/* Page Header */}
         <Box mb={4}>
           <Typography 

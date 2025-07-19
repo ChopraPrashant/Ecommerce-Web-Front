@@ -29,7 +29,9 @@ const StyledProductList = styled(Box)(({ theme }) => ({
   '& .MuiPagination-ul': {
     justifyContent: 'center',
     marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(4), // Added bottom margin
   },
+  paddingBottom: theme.spacing(4), // Added padding to the bottom of the product list
 }));
 
 const ProductGrid = styled(Box)(({ theme }) => ({
