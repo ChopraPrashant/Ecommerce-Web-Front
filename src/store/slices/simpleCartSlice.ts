@@ -1,8 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CartItem, CartState } from '../store';
+import { saveCartToStorage, getCartFromStorage, clearCartFromStorage } from '../../utils/cartStorage';
+
+// Load cart from localStorage on initial state
+const savedCart = getCartFromStorage();
 
 const initialState: CartState = {
-  cart: null,
+  cart: savedCart,
   isLoading: false,
   error: null,
   isUpdating: false,
@@ -21,6 +25,12 @@ const cartSlice = createSlice({
       state.cart = action.payload;
       state.isLoading = false;
       state.error = null;
+      // Save to localStorage whenever cart is updated
+      if (action.payload) {
+        saveCartToStorage(action.payload);
+      } else {
+        clearCartFromStorage();
+      }
     },
     fetchCartFailure: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
@@ -29,6 +39,11 @@ const cartSlice = createSlice({
     
     // Add to cart
     addToCart: (state, action: PayloadAction<CartItem>) => {
+      // Ensure we have a valid product with stock
+      if (!action.payload || action.payload.stock <= 0) {
+        console.warn('Cannot add invalid or out of stock item to cart');
+        return;
+      }
       if (!state.cart) {
         // Check stock before initializing cart
         if (action.payload.stock <= 0) {
@@ -82,7 +97,7 @@ const cartSlice = createSlice({
         });
       }
 
-      // Update totals
+      // Recalculate totals
       const subtotal = state.cart.items.reduce(
         (sum, item) => sum + (item.price * item.quantity),
         0
@@ -95,75 +110,79 @@ const cartSlice = createSlice({
       };
 
       state.cart.updatedAt = new Date().toISOString();
+      
+      // Save to localStorage
+      saveCartToStorage(state.cart);
+      saveCartToStorage(state.cart);
     },
     
     // Update quantity
-    updateQuantity: (state, action: PayloadAction<{ id: string; quantity: number }>) => {
+    updateQuantity: (state: CartState, action: PayloadAction<{ id: string; quantity: number }>) => {
       if (!state.cart) return;
       
       const { id, quantity } = action.payload;
       const item = state.cart.items.find(item => item._id === id);
       
       if (item) {
-        // Don't allow quantity to exceed stock
-        if (quantity > item.stock) {
-          console.warn('Cannot set quantity higher than available stock');
-          return;
-        }
-        
-        // Don't allow quantity less than 1 (use remove instead)
-        if (quantity < 1) {
-          console.warn('Quantity must be at least 1');
-          return;
-        }
-        
-        item.quantity = quantity;
-        
-        // Update totals
-        const subtotal = state.cart.items.reduce(
-          (sum, item) => sum + (item.price * item.quantity),
-          0
-        );
-        
-        state.cart.totals = {
-          ...state.cart.totals,
-          subtotal,
-          total: subtotal - (state.cart.totals?.discount || 0) + (state.cart.totals?.shipping || 0) + (state.cart.totals?.tax || 0),
-        };
-        state.cart.updatedAt = new Date().toISOString();
+        // Ensure quantity doesn't exceed available stock
+        const newQuantity = Math.min(quantity, item.stock);
+        item.quantity = newQuantity > 0 ? newQuantity : 1; // Don't allow 0 or negative quantities
       }
+      
+      // Update totals
+      const subtotal = state.cart.items.reduce(
+        (sum: number, item: CartItem) => sum + (item.price * item.quantity),
+        0
+      );
+      
+      state.cart.totals = {
+        ...state.cart.totals,
+        subtotal,
+        total: subtotal - (state.cart.totals?.discount || 0) + (state.cart.totals?.shipping || 0) + (state.cart.totals?.tax || 0),
+      };
+      state.cart.updatedAt = new Date().toISOString();
+      
+      // Save to localStorage
+      saveCartToStorage(state.cart);
     },
     
     // Remove from cart
-    removeFromCart: (state, action: PayloadAction<string>) => {
+    removeFromCart: (state: CartState, action: PayloadAction<string>) => {
       if (!state.cart) return;
       
-      state.cart.items = state.cart.items.filter(item => item._id !== action.payload);
+      state.cart.items = state.cart.items.filter((item: CartItem) => item._id !== action.payload);
       
       // Update totals
-      if (state.cart) {
-        state.cart.totals.subtotal = state.cart.items.reduce(
-          (sum, item) => sum + (item.price * item.quantity),
-          0
-        );
-        state.cart.totals.total = state.cart.totals.subtotal;
-        state.cart.updatedAt = new Date().toISOString();
+      const subtotal = state.cart.items.reduce(
+        (sum: number, item: CartItem) => sum + (item.price * item.quantity),
+        0
+      );
+
+      state.cart.totals = {
+        ...state.cart.totals,
+        subtotal,
+        total: subtotal - (state.cart.totals?.discount || 0) + (state.cart.totals?.shipping || 0) + (state.cart.totals?.tax || 0),
+      };
+
+      state.cart.updatedAt = new Date().toISOString();
+      
+      // Save to localStorage
+      if (state.cart.items.length === 0) {
+        state.cart = null;
+        clearCartFromStorage();
+      } else {
+        saveCartToStorage(state.cart);
       }
     },
     
     // Clear cart
-    clearCart: (state) => {
-      if (state.cart) {
-        state.cart.items = [];
-        state.cart.totals = {
-          subtotal: 0,
-          discount: 0,
-          shipping: 0,
-          tax: 0,
-          total: 0,
-          currency: 'INR',
-        };
-      }
+    clearCart: (state: CartState) => {
+      state.cart = null;
+      state.isLoading = false;
+      state.error = null;
+      state.isUpdating = false;
+      // Clear from localStorage
+      clearCartFromStorage();
     },
     
     // Set loading state
