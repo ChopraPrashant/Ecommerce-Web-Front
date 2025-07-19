@@ -160,7 +160,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           }
         }}
       >
-        <Box component="main" sx={{ flexGrow: 1, pt: 8, pb: shouldShowFooter ? 0 : 0 }}>
+        <Box component="main" sx={{ flexGrow: 1, pt: 5, pb: shouldShowFooter ? 0 : 0 }}>
           {children}
         </Box>
         
@@ -215,7 +215,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               {/* Right Column - Contact Info */}
               <Box sx={{ maxWidth: '100%', ml: { md: 30 }, mr: { md: 0 } }}>
                 <Typography variant="body1" color="text.secondary" sx={{ mb: 1.5, fontWeight: 700, fontSize: '1.1rem' }}>
-                  Prashant Chopra
+                  Ashok Chopra
                 </Typography>
                 <Box sx={{ 
                   display: 'flex', 
@@ -244,7 +244,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                   <Typography 
                     variant="body2" 
                     component="a" 
-                    href="tel:+919408761181" 
+                    href="tel:+919426029094" 
                     color="text.secondary" 
                     sx={{ 
                       textDecoration: 'none', 
@@ -255,12 +255,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                     }}
                   >
                     <Phone fontSize="small" />
-                    <span>+91 9408761181<br />+91 9426029094</span>
+                    <span>+91 9426029094<br />+91 9408761181</span>
                   </Typography>
                   <Typography 
                     variant="body2" 
                     component="a" 
-                    href="mailto:Prashant.ecommerce2025@gmail.com" 
+                    href="mailto:uttam.corp@gmail.com" 
                     color="text.secondary" 
                     sx={{ 
                       textDecoration: 'none', 
@@ -271,7 +271,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                     }}
                   >
                     <Email fontSize="small" />
-                    <span>Prashant.ecommerce2025@gmail.com</span>
+                    <span>uttam.corp@gmail.com</span>
                   </Typography>
                 </Box>
               </Box>

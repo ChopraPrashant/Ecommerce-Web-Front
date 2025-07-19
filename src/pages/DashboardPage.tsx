@@ -179,12 +179,14 @@ const DashboardPage: React.FC = () => {
         src="/Productss.png"
         alt="Banner"
         sx={{
-          width: '100%',
-          height: '550px',
+          width: '98%',
+          height: '540px',
           objectFit: 'cover',
           display: 'block',
           backgroundColor: '#f5f5f5',
-          mt: 1
+          mt: 4,
+          ml: 2,  // Small left margin
+          borderRadius: 1
         }}
       />
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
