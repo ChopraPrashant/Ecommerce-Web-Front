@@ -7,10 +7,10 @@ const ContactPage: React.FC = () => {
   // Contact information
   const contactInfo = {
     companyName: 'Uttam Corporation',
-    yourName: 'Prashant Chopra',
-    email: 'Prashant.ecommerce2025@gmail.com',
-    phone: '+91 9408761181',
-    mobile: '+91 9426029094',
+    yourName: 'Ashok Chopra',
+    email: 'uttam.corp@gmail.com',
+    phone: '+91 9426029094',
+    mobile: '+91 9408761181',
     address: {
       street: 'B-30 Karnavati Estate, G.I.D.C, Phase 3, Vatva',
       city: 'Ahmedabad',
@@ -30,8 +30,8 @@ const ContactPage: React.FC = () => {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    minHeight: 'calc(100vh - 200px)', // Adjust based on your header/footer height
-    padding: '24px',
+    minHeight: 'auto', // Changed from fixed height to auto
+    padding: '12px 0', // Reduced from 24px all around to 12px top/bottom, 0 left/right
   });
   
   const SingleCardContainer = styled('div')({
@@ -42,8 +42,8 @@ const ContactPage: React.FC = () => {
   const ContactCard = styled(Box)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
-    gap: '16px',
-    padding: theme.spacing(4),
+    gap: '8px', // Reduced from 16px
+    padding: theme.spacing(2), // Reduced from 4 (32px) to 2 (16px)
     backgroundColor: theme.palette.background.paper,
     borderRadius: theme.shape.borderRadius,
     height: '100%',
@@ -56,8 +56,8 @@ const ContactPage: React.FC = () => {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: '16px',
-    gap: '8px',
+    marginBottom: '8px', // Reduced from 16px
+    gap: '4px', // Reduced from 8px
     width: '100%',
   });
 
@@ -107,7 +107,7 @@ const ContactPage: React.FC = () => {
   });
 
   return (
-    <Container maxWidth="lg" sx={{ pt: 1, pb: 6 }}>
+    <Container maxWidth="lg" sx={{ pt: 0, pb: 6 }}>
       <ContactContainer>
         <SingleCardContainer>
         {/* Contact Information */}
