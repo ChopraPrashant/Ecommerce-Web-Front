@@ -1,9 +1,9 @@
-import { ReactNode } from 'react';
-import { Box, CssBaseline, AppBar, Toolbar, Typography, Button, InputBase, alpha, Container, Badge, IconButton } from '@mui/material';
+import { ReactNode, useState } from 'react';
+import { Box, CssBaseline, AppBar, Toolbar, Typography, Button, InputBase, alpha, Container, Badge, IconButton, useMediaQuery, useTheme, Drawer, List, ListItem, ListItemText, Divider } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartOutlined from '@mui/icons-material/ShoppingCartOutlined';
-import LinkedIn from '@mui/icons-material/LinkedIn';
-import Twitter from '@mui/icons-material/Twitter';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import LocationOn from '@mui/icons-material/LocationOn';
 import Phone from '@mui/icons-material/Phone';
 import Email from '@mui/icons-material/Email';
@@ -16,6 +16,18 @@ interface MainLayoutProps {
 }
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const toggleSearch = () => {
+    setShowSearch(!showSearch);
+  };
   const cartItemCount = useAppSelector(
     (state) => state.cart.cart?.items?.reduce((total: number, item: any) => total + (item.quantity || 0), 0) || 0
   );
@@ -31,42 +43,59 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100vh',
+        width: '100%',
+        maxWidth: '100vw',
+        overflowX: 'hidden',
+        position: 'relative'
       }}
     >
       <CssBaseline />
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-        <Toolbar>
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
+          {/* Mobile menu button */}
           <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { md: 'none' } }}
+            >
+              <MenuIcon />
+            </IconButton>
+
+            {/* Logo and Company Name */}
+            <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0, mr: 2 }}>
               <Box 
                 component="img"
                 src="logoo.png" 
                 alt="Uttam Corporation Logo"
                 sx={{
-                  height: 40,
+                  height: { xs: 30, sm: 40 },
                   width: 'auto',
-                  marginRight: 0,
+                  mr: 1,
                 }}
               />
-              <Typography variant="h6" component="div">
-                <Button 
-                  component={Link}
-                  to="/"
-                  color="inherit" 
-                  sx={{ 
-                    fontSize: '1.25rem',
-                    fontWeight: 700,
-                    textTransform: 'none',
-                    '&:hover': {
-                      backgroundColor: 'transparent',
-                    },
-                  }}
-                >
-                  Uttam Corporation
-                </Button>
+              <Typography 
+                variant="h6" 
+                component={Link}
+                to="/"
+                sx={{ 
+                  color: 'inherit',
+                  textDecoration: 'none',
+                  fontWeight: 700,
+                  fontSize: { xs: '1rem', sm: '1.25rem' },
+                  whiteSpace: 'nowrap',
+                  '&:hover': {
+                    textDecoration: 'none',
+                  },
+                }}
+              >
+                Uttam Corporation
               </Typography>
             </Box>
             
+            {/* Search Bar - Desktop */}
             <Box
               sx={{
                 position: 'relative',
@@ -75,10 +104,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 '&:hover': {
                   backgroundColor: (theme) => alpha(theme.palette.common.white, 0.25),
                 },
-                marginLeft: 3,
-                marginRight: 3,
+                ml: { xs: 0, md: 3 },
+                mr: { xs: 1, md: 3 },
                 width: '100%',
                 maxWidth: 500,
+                display: { xs: showSearch ? 'flex' : 'none', md: 'flex' },
+                flex: { xs: 1, md: '0 1 auto' },
               }}
             >
               <Box
@@ -108,40 +139,74 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 }}
                 inputProps={{ 'aria-label': 'search' }}
               />
+              {isMobile && (
+                <IconButton
+                  color="inherit"
+                  onClick={() => setShowSearch(false)}
+                  sx={{ mr: 1 }}
+                >
+                  <CloseIcon />
+                </IconButton>
+              )}
             </Box>
           </Box>
           
-          <Box sx={{ display: 'flex', gap: 1 }}>
+          {/* Desktop Navigation */}
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1, alignItems: 'center' }}>
             <Button 
               component={Link}
               to="/"
               color="inherit" 
-              sx={{ whiteSpace: 'nowrap' }}
+              sx={{ whiteSpace: 'nowrap', minWidth: 'auto', px: 1 }}
             >
               Dashboard
             </Button>
             <Button 
               component={Link}
-              to="/contact"
+              to="/products"
               color="inherit" 
-              sx={{ whiteSpace: 'nowrap' }}
+              sx={{ whiteSpace: 'nowrap', minWidth: 'auto', px: 1 }}
             >
-              Contact Us
+              Products
             </Button>
             <Button 
               component={Link}
-              to="/products"
+              to="/contact"
               color="inherit" 
-              sx={{ mx: 1 }}
+              sx={{ whiteSpace: 'nowrap', minWidth: 'auto', px: 1 }}
             >
-              Products
+              Contact Us
             </Button>
             <IconButton 
               component={Link}
               to="/cart"
               color="inherit" 
               aria-label="cart"
-              sx={{ ml: 2 }}
+              sx={{ ml: 1 }}
+              size="large"
+            >
+              <Badge badgeContent={cartItemCount} color="error">
+                <ShoppingCartOutlined />
+              </Badge>
+            </IconButton>
+          </Box>
+
+          {/* Mobile Search and Cart */}
+          <Box sx={{ display: { xs: 'flex', md: 'none' }, gap: 1, alignItems: 'center', ml: 1 }}>
+            <IconButton
+              color="inherit"
+              aria-label="search"
+              onClick={toggleSearch}
+              sx={{ display: showSearch ? 'none' : 'flex' }}
+            >
+              <SearchIcon />
+            </IconButton>
+            <IconButton 
+              component={Link}
+              to="/cart"
+              color="inherit" 
+              aria-label="cart"
+              size="large"
             >
               <Badge badgeContent={cartItemCount} color="error">
                 <ShoppingCartOutlined />
@@ -150,12 +215,88 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           </Box>
         </Toolbar>
       </AppBar>
+
+      {/* Mobile Drawer */}
+      <Drawer
+        variant="temporary"
+        anchor="left"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        ModalProps={{
+          keepMounted: true, // Better open performance on mobile
+        }}
+        sx={{
+          display: { xs: 'block', md: 'none' },
+          '& .MuiDrawer-paper': { 
+            boxSizing: 'border-box',
+            width: 280,
+            backgroundColor: (theme) => theme.palette.background.paper,
+          },
+        }}
+      >
+        <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Typography variant="h6" component="div">
+            Menu
+          </Typography>
+          <IconButton onClick={handleDrawerToggle}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
+        <Divider />
+        <List>
+          <ListItem 
+            component={Link} 
+            to="/" 
+            onClick={handleDrawerToggle}
+            sx={{
+              '&:hover': {
+                backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.1),
+              },
+              cursor: 'pointer',
+              textDecoration: 'none',
+              color: 'inherit',
+            }}
+          >
+            <ListItemText primary="Dashboard" />
+          </ListItem>
+          <ListItem 
+            component={Link} 
+            to="/products" 
+            onClick={handleDrawerToggle}
+            sx={{
+              '&:hover': {
+                backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.1),
+              },
+              cursor: 'pointer',
+              textDecoration: 'none',
+              color: 'inherit',
+            }}
+          >
+            <ListItemText primary="Products" />
+          </ListItem>
+          <ListItem 
+            component={Link} 
+            to="/contact" 
+            onClick={handleDrawerToggle}
+            sx={{
+              '&:hover': {
+                backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.1),
+              },
+              cursor: 'pointer',
+              textDecoration: 'none',
+              color: 'inherit',
+            }}
+          >
+            <ListItemText primary="Contact Us" />
+          </ListItem>
+        </List>
+      </Drawer>
       <Box
         component="main"
         sx={{
           flexGrow: 1,
-          height: '100vh',
-          overflow: 'auto',
+          width: '100%',
+          overflowX: 'hidden',
           pt: 8, // Padding top to account for AppBar
           '&::-webkit-scrollbar': {
             width: '8px',
@@ -172,7 +313,16 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           }
         }}
       >
-        <Box component="main" sx={{ flexGrow: 1, pt: 5, pb: shouldShowFooter ? 0 : 0 }}>
+        <Box component="div" sx={{ 
+          width: '100%',
+          maxWidth: '100%',
+          overflow: 'hidden',
+          flexGrow: 1, 
+          pt: { xs: 7, sm: 8 }, 
+          pb: shouldShowFooter ? 0 : 0,
+          px: { xs: 2, sm: 3, md: 4 },
+          boxSizing: 'border-box'
+        }}>
           {children}
         </Box>
         
@@ -192,17 +342,26 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <Box sx={{ 
               display: 'grid',
               gridTemplateColumns: { xs: '1fr', md: '1fr 1.3fr' },
-              gap: 4,
+              gap: { xs: 3, md: 4 },
               mb: 2,
               '& > div': {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: { xs: 'center', md: 'flex-start' },
-                textAlign: { xs: 'center', md: 'left' }
+                textAlign: { xs: 'center', md: 'left' },
+                '& > *': {
+                  maxWidth: '100%',
+                }
               }
             }}>
               {/* Left Column - Company Info and Business Hours */}
-              <Box sx={{ maxWidth: '100%', pl: { md: 6 } }}>
+              <Box sx={{ 
+                maxWidth: '100%', 
+                pl: { md: 6 },
+                width: '100%',
+                boxSizing: 'border-box',
+                px: { xs: 2, sm: 0 },
+              }}>
                 <Box sx={{ mb: 2 }}>
                   <Typography variant="h6" gutterBottom fontWeight={800} color="primary" sx={{ fontSize: '1.35rem' }}>
                     Uttam Corporation
@@ -225,8 +384,21 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               </Box>
 
               {/* Right Column - Contact Info */}
-              <Box sx={{ maxWidth: '100%', ml: { md: 30 }, mr: { md: 0 } }}>
-                <Typography variant="body1" color="primary" sx={{ mb: 1.5, fontWeight: 800, fontSize: '1.1rem' }}>
+              <Box sx={{ 
+                maxWidth: '100%', 
+                ml: { md: 30 }, 
+                mr: { md: 0 },
+                width: '100%',
+                boxSizing: 'border-box',
+                px: { xs: 2, sm: 0 },
+                mt: { xs: 4, md: 0 },
+              }}>
+                <Typography variant="body1" color="primary" sx={{ 
+                  mb: 1.5, 
+                  fontWeight: 800, 
+                  fontSize: '1.1rem',
+                  textAlign: { xs: 'center', md: 'left' }
+                }}>
                   Ashok Chopra
                 </Typography>
                 <Box sx={{ 
@@ -235,12 +407,15 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                   gap: 1.2,
                   '& > *': {
                     display: 'flex',
-                    alignItems: 'flex-start',
-                    lineHeight: 1.4
+                    lineHeight: 1.4,
+                    flexDirection: { xs: 'column', md: 'row' },
+                    alignItems: { xs: 'center', md: 'flex-start' },
+                    textAlign: { xs: 'center', md: 'left' }
                   },
                   '& svg': {
                     mt: 0.5,
-                    mr: 1.5,
+                    mr: { xs: 0, md: 1.5 },
+                    mb: { xs: 0.5, md: 0 },
                     color: 'primary.main',
                     flexShrink: 0
                   }
@@ -311,10 +486,11 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               mt: 2,
               borderTop: 1, 
               borderColor: 'divider',
-              textAlign: 'center'
+              textAlign: 'center',
+              px: { xs: 2, sm: 0 },
             }}>
               <Typography variant="body2" color="text.secondary" align="center">
-                © {new Date().getFullYear()} Uttam Corporation. All rights reserved.
+                {new Date().getFullYear()} Uttam Corporation. All rights reserved.
               </Typography>
             </Box>
           </Container>

@@ -205,7 +205,7 @@ const DashboardPage: React.FC = () => {
       <Helmet>
         <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </Helmet>
-      <Box sx={{ mt: -4 }}>
+      <Box sx={{ mt: -8 }}>
         <ScrollingText text="Supplying Quality Water Pumps, Induction Motors, and Cables for over 20 years — Trusted Registered Dealer in the Marketplace" />
       </Box>
       {/* Full Width Banner */}
@@ -215,13 +215,19 @@ const DashboardPage: React.FC = () => {
         alt="Banner"
         sx={{
           width: '98%',
-          height: '540px',
+          height: { xs: '300px', sm: '540px' },
           objectFit: 'cover',
           display: 'block',
           backgroundColor: '#f5f5f5',
           mt: 4,
-          ml: 2,  // Small left margin
-          borderRadius: 1
+          ml: { xs: 0, sm: 2 },
+          mx: { xs: 'auto', sm: 'unset' },
+          borderRadius: 1,
+          '@media (max-width: 600px)': {
+            width: '100%',
+            objectFit: 'contain',
+            backgroundColor: 'transparent'
+          }
         }}
       />
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -251,7 +257,17 @@ const DashboardPage: React.FC = () => {
 
         {/* What we Deal In */}
         <Box sx={{ mt: 8, mb: 4 }}>
-          <Typography variant="h4" component="h2" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'left' }}>
+          <Typography 
+            variant="h4" 
+            component="h2" 
+            gutterBottom 
+            sx={{ 
+              fontWeight: 'bold', 
+              textAlign: { xs: 'center', sm: 'left' },
+              width: '100%',
+              px: { xs: 2, sm: 0 }
+            }}
+          >
             We Deal In
           </Typography>
           

@@ -107,7 +107,7 @@ const ContactPage: React.FC = () => {
   });
 
   return (
-    <Container maxWidth="lg" sx={{ pt: 0, pb: 6 }}>
+    <Container maxWidth="lg" sx={{ pt: 0, pb: 6, mt: -4 }}>
       <ContactContainer>
         <SingleCardContainer>
         {/* Contact Information */}

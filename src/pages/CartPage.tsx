@@ -179,7 +179,7 @@ const CartPage: React.FC = () => {
 
 
   return (
-    <Container maxWidth="lg" sx={{ pt: 1, pb: 4 }}>
+    <Container maxWidth="lg" sx={{ pt: 0, pb: 4, mt: -5 }}>
       <Typography 
         variant="h4" 
         gutterBottom 
@@ -187,7 +187,7 @@ const CartPage: React.FC = () => {
           fontWeight: 700,
           color: 'text.primary',
           mb: 1,
-          mt: -3,
+          mt: 0,
           position: 'relative',
           '&:after': {
             content: '""',
