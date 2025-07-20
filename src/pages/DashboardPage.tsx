@@ -87,9 +87,44 @@ const DashboardPage: React.FC = () => {
     },
     {
       id: '5',
-      name: 'Cable',
+      name: 'Cable 100m',
       price: 999,
       image: 'Cables.png',
+      sales: 0
+    },
+    {
+      id: '6',
+      name: 'STPM22(1PH)-15 2HP',
+      price: 24999,
+      image: 'STPM22.png',
+      sales: 0
+    },
+    {
+      id: '7',
+      name: 'Control Panel 1.5HP',
+      price: 3499,
+      image: 'controlpanel.png',
+      sales: 0
+    },
+    {
+      id: '8',
+      name: 'Flomax Plus 1HP',
+      price: 10999,
+      image: 'flomaxplus.png',
+      sales: 0
+    },
+    {
+      id: '9',
+      name: 'Champ Dura 1HP',
+      price: 5199,
+      image: 'champdura.png',
+      sales: 0
+    },
+    {
+      id: '10',
+      name: 'Sewerage Pump 0.5HP',
+      price: 11999,
+      image: 'stpg.png',
       sales: 0
     },
   ];
