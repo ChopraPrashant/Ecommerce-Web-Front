@@ -37,23 +37,35 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
           <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-            <Typography variant="h6" component="div">
-              <Button 
-                component={Link}
-                to="/"
-                color="inherit" 
-                sx={{ 
-                  fontSize: '1.25rem',
-                  fontWeight: 700,
-                  textTransform: 'none',
-                  '&:hover': {
-                    backgroundColor: 'transparent',
-                  },
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box 
+                component="img"
+                src="logoo.png" 
+                alt="Uttam Corporation Logo"
+                sx={{
+                  height: 40,
+                  width: 'auto',
+                  marginRight: 0,
                 }}
-              >
-                Uttam Corporation
-              </Button>
-            </Typography>
+              />
+              <Typography variant="h6" component="div">
+                <Button 
+                  component={Link}
+                  to="/"
+                  color="inherit" 
+                  sx={{ 
+                    fontSize: '1.25rem',
+                    fontWeight: 700,
+                    textTransform: 'none',
+                    '&:hover': {
+                      backgroundColor: 'transparent',
+                    },
+                  }}
+                >
+                  Uttam Corporation
+                </Button>
+              </Typography>
+            </Box>
             
             <Box
               sx={{
