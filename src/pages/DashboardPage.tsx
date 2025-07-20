@@ -88,7 +88,7 @@ const DashboardPage: React.FC = () => {
     {
       id: '5',
       name: 'Cable 100m',
-      price: 999,
+      price: 5999,
       image: 'Cables.png',
       sales: 0
     },
