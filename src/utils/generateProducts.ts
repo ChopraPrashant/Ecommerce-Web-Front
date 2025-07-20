@@ -368,138 +368,70 @@ const waterPumps: IProduct[] = [
 // Induction Motors
 const inductionMotors: IProduct[] = [
   createProduct({
-    name: 'Bharat Bijlee 3HP Induction Motor',
+    name: 'Bharat Bijlee IE2 Induction Motor 3 HP',
     slug: 'bharat-bijlee-3hp-induction',
     description: 'Energy efficient 3HP 3-phase induction motor with IP55 protection. Suitable for industrial applications.',
-    shortDescription: '3HP industrial induction motor',
+    shortDescription: 'IE2 3HP Squirrel Cage 3000 RPM Foot Mounted Induction Motor',
     sku: 'MOTOR-BB-3HP',
-    price: 18999,
-    originalPrice: 20999,
+    price: 39999,
+    originalPrice: 47680,
     stock: 5,
     brand: brands[2],
     categories: [categories[1]],
     tags: ['industrial', '3-phase'],
     images: [
-      { url: '/images/products/motors/bharat-bijlee-3hp.jpg', alt: 'Bharat Bijlee 3HP Motor', isPrimary: true }
+      { url: '/inductionmotor.png', alt: 'Bharat Bijlee 3HP Motor', isPrimary: true }
     ],
     reviews: []
   }),
   createProduct({
-    name: 'Bharat Bijlee 5HP Induction Motor',
+    name: 'Bharat Bijlee IE3 Induction Motor 5 HP',
     slug: 'bharat-bijlee-5hp-induction',
     description: 'Heavy-duty 5HP 3-phase induction motor with IP55 protection. Ideal for industrial and agricultural applications.',
-    shortDescription: '5HP industrial induction motor',
+    shortDescription: 'IE3 5HP Squirrel Cage 3000 RPM Foot Mounted Induction Motor',
     sku: 'MOTOR-BB-5HP',
-    price: 28999,
-    originalPrice: 31999,
+    price: 51999,
+    originalPrice: 73580,
     stock: 4,
     brand: brands[2],
     categories: [categories[1]],
     tags: ['industrial', '3-phase', 'heavy-duty'],
     images: [
-      { url: '/images/products/motors/bharat-bijlee-5hp.jpg', alt: 'Bharat Bijlee 5HP Motor', isPrimary: true }
+      { url: '/inductionred.png', alt: 'Bharat Bijlee 5HP Motor', isPrimary: true }
     ],
     reviews: []
   }),
   createProduct({
-    name: 'L&T 2HP Single Phase Motor',
-    slug: 'lnt-2hp-single-phase',
-    description: '2HP single phase induction motor with thermal protection. Suitable for domestic and light industrial use.',
-    shortDescription: '2HP Single Phase Motor',
-    sku: 'MOTOR-LNT-2HP-SP',
-    price: 12999,
-    originalPrice: 14499,
-    stock: 6,
-    brand: brands[3],
-    categories: [categories[1]],
-    tags: ['domestic', 'single-phase'],
-    images: [
-      { url: '/images/products/motors/lnt-2hp-single-phase.jpg', alt: 'L&T 2HP Single Phase Motor', isPrimary: true }
-    ],
-    reviews: []
-  }),
-  createProduct({
-    name: 'Bharat Bijlee 7.5HP Induction Motor',
+    name: 'Bharat Bijlee IE3 Induction Motor 7.5 HP',
     slug: 'bharat-bijlee-7.5hp-induction',
     description: 'Heavy-duty 7.5HP 3-phase induction motor with IP55 protection. Designed for industrial applications.',
-    shortDescription: '7.5HP industrial induction motor',
+    shortDescription: 'IE3 7.5HP Squirrel Cage 1500 RPM Foot Mounted Induction Motor',
     sku: 'MOTOR-BB-7.5HP',
-    price: 38999,
-    originalPrice: 42999,
+    price: 79999,
+    originalPrice: 111000,
     stock: 3,
     brand: brands[2],
     categories: [categories[1]],
     tags: ['industrial', '3-phase', 'heavy-duty'],
     images: [
-      { url: '/images/products/motors/bharat-bijlee-7.5hp.jpg', alt: 'Bharat Bijlee 7.5HP Motor', isPrimary: true }
+      { url: '/inductionn.png', alt: 'Bharat Bijlee 7.5HP Motor', isPrimary: true }
     ],
     reviews: []
   }),
   createProduct({
-    name: 'L&T 5HP Three Phase Motor',
-    slug: 'lnt-5hp-three-phase',
-    description: '5HP three phase induction motor with energy efficiency. Ideal for industrial and commercial applications.',
-    shortDescription: '5HP Three Phase Motor',
-    sku: 'MOTOR-LNT-5HP-TP',
-    price: 27999,
-    originalPrice: 30999,
+    name: 'Bharat Bijlee IE3 Induction Motor 10 HP',
+    slug: 'bharat-bijlee-10hp-induction',
+    description: 'Heavy-duty 10HP 3-phase induction motor with IP55 protection. Designed for industrial applications.',
+    shortDescription: 'IE3 10HP Squirrel Cage 3000 RPM Foot Mounted Induction Motor',
+    sku: 'MOTOR-BB-10HP',
+    price: 99999,
+    originalPrice: 122930,
     stock: 5,
-    brand: brands[3],
+    brand: brands[2],
     categories: [categories[1]],
-    tags: ['industrial', '3-phase'],
+    tags: ['industrial', '3-phase', 'heavy-duty'],
     images: [
-      { url: '/images/products/motors/lnt-5hp-three-phase.jpg', alt: 'L&T 5HP Three Phase Motor', isPrimary: true }
-    ],
-    reviews: []
-  }),
-  createProduct({
-    name: 'Havells 1HP Single Phase Motor',
-    slug: 'havells-1hp-single-phase',
-    description: '1HP single phase induction motor with thermal protection. Perfect for domestic water pumps and light industrial use.',
-    shortDescription: '1HP Single Phase Motor',
-    sku: 'MOTOR-HAVELLS-1HP-SP',
-    price: 8499,
-    originalPrice: 9299,
-    stock: 8,
-    brand: brands[4],
-    categories: [categories[1]],
-    tags: ['domestic', 'single-phase'],
-    images: [
-      { url: '/images/products/motors/havells-1hp-single-phase.jpg', alt: 'Havells 1HP Single Phase Motor', isPrimary: true }
-    ],
-    reviews: []
-  }),
-  createProduct({
-    name: 'Orient 3HP Three Phase Motor',
-    slug: 'orient-3hp-three-phase',
-    description: '3HP three phase induction motor with high efficiency. Suitable for industrial and agricultural applications.',
-    shortDescription: '3HP Three Phase Motor',
-    sku: 'MOTOR-ORIENT-3HP-TP',
-    price: 18999,
-    originalPrice: 20999,
-    stock: 6,
-    brand: brands[5],
-    categories: [categories[1]],
-    tags: ['industrial', '3-phase', 'agricultural'],
-    images: [
-      { url: '/images/products/motors/orient-3hp-three-phase.jpg', alt: 'Orient 3HP Three Phase Motor', isPrimary: true }
-    ],
-    reviews: []
-  }),
-  createProduct({
-    name: 'Havells 2HP Single Phase Motor',
-    slug: 'havells-2hp-single-phase',
-    description: '2HP single phase induction motor with thermal protection. Ideal for domestic and light industrial applications.',
-    shortDescription: '2HP Single Phase Motor',
-    sku: 'MOTOR-HAVELLS-2HP-SP',
-    price: 12499,
-    originalPrice: 13799,
-    stock: 5,
-    brand: brands[4],
-    categories: [categories[1]],
-    tags: ['domestic', 'single-phase', 'industrial'],
-    images: [
-      { url: '/images/products/motors/havells-2hp-single-phase.jpg', alt: 'Havells 2HP Single Phase Motor', isPrimary: true }
+      { url: '/inductionred.png', alt: 'Bharat Bijlee 10HP Motor', isPrimary: true }
     ],
     reviews: []
   })
@@ -515,40 +447,6 @@ const inductionMotors: IProduct[] = [
 
 // Cables
 const cables: IProduct[] = [
-  createProduct({
-    name: 'L&T 6 Sq.mm 90m FR PVC Cable',
-    slug: 'lnt-6sqmm-fr-pvc-cable',
-    description: '6 Sq.mm 2 Core 90m FR PVC Copper Cable. Fire retardant and suitable for domestic and industrial wiring.',
-    shortDescription: '6 Sq.mm 2 Core FR PVC Cable',
-    sku: 'CABLE-LNT-6SQMM',
-    price: 12500,
-    originalPrice: 13999,
-    stock: 50,
-    brand: brands[3],
-    categories: [categories[2]],
-    tags: ['copper', 'fr-pvc'],
-    images: [
-      { url: '/images/products/cables/lnt-6sqmm.jpg', alt: 'L&T 6 Sq.mm Cable', isPrimary: true }
-    ],
-    reviews: []
-  }),
-  createProduct({
-    name: 'Havells FR-LSH 2.5 Sq.mm 90m Cable',
-    slug: 'havells-fr-lsh-2.5sqmm-cable',
-    description: '2.5 Sq.mm 2 Core 90m FR-LSH Copper Cable. Fire retardant and low smoke zero halogen for safety.',
-    shortDescription: '2.5 Sq.mm 2 Core FR-LSH Cable',
-    sku: 'CABLE-HAVELLS-2.5SQMM',
-    price: 8500,
-    originalPrice: 9499,
-    stock: 30,
-    brand: brands[4],
-    categories: [categories[2]],
-    tags: ['copper', 'fr-lsh'],
-    images: [
-      { url: '/images/products/cables/havells-2.5sqmm.jpg', alt: 'Havells 2.5 Sq.mm Cable', isPrimary: true }
-    ],
-    reviews: []
-  }),
   createProduct({
     name: 'Polycab 4 Sq.mm 90m FR PVC Cable',
     slug: 'polycab-4sqmm-fr-pvc-cable',
@@ -592,40 +490,6 @@ const cables: IProduct[] = [
     tags: ['copper', 'fr-pvc'],
     images: [
       { url: '/images/products/cables/finolex-1.5sqmm.jpg', alt: 'Finolex 1.5 Sq.mm Cable', isPrimary: true }
-    ],
-    reviews: []
-  }),
-  createProduct({
-    name: 'Havells 10 Sq.mm 90m FR PVC Cable',
-    slug: 'havells-10sqmm-fr-pvc-cable',
-    description: '10 Sq.mm 3.5 Core 90m FR PVC Copper Cable. Heavy duty for industrial and commercial applications.',
-    shortDescription: '10 Sq.mm 3.5 Core FR PVC Cable',
-    sku: 'CABLE-HAVELLS-10SQMM',
-    price: 42500,
-    originalPrice: 45999,
-    stock: 12,
-    brand: brands[4],
-    categories: [categories[2]],
-    tags: ['copper', 'fr-pvc', 'industrial'],
-    images: [
-      { url: '/images/products/cables/havells-10sqmm.jpg', alt: 'Havells 10 Sq.mm Cable', isPrimary: true }
-    ],
-    reviews: []
-  }),
-  createProduct({
-    name: 'L&T 16 Sq.mm 90m FR PVC Cable',
-    slug: 'lnt-16sqmm-fr-pvc-cable',
-    description: '16 Sq.mm 4 Core 90m FR PVC Copper Cable. Heavy duty for industrial and commercial applications.',
-    shortDescription: '16 Sq.mm 4 Core FR PVC Cable',
-    sku: 'CABLE-LNT-16SQMM',
-    price: 68900,
-    originalPrice: 74999,
-    stock: 8,
-    brand: brands[3],
-    categories: [categories[2]],
-    tags: ['copper', 'fr-pvc', 'industrial'],
-    images: [
-      { url: '/images/products/cables/lnt-16sqmm.jpg', alt: 'L&T 16 Sq.mm Cable', isPrimary: true }
     ],
     reviews: []
   }),
