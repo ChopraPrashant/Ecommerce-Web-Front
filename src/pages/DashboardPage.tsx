@@ -59,36 +59,36 @@ const DashboardPage: React.FC = () => {
   const bestSellingProducts: Product[] = [
     {
       id: '1',
-      name: 'Submersible Pump',
-      price: 0,
-      image: 'submersible.png',
+      name: 'OWE052(1PH)Z-21FS',
+      price: 9999,
+      image: 'OWE052.png',
       sales: 0
     },
     {
       id: '2',
-      name: 'MonoBlock Pump',
-      price: 0,
-      image: 'Monoblock.png',
+      name: 'Aquagold 150',
+      price: 15550,
+      image: 'aquagold150.png',
       sales: 0
     },
     {
       id: '3',
-      name: 'Induction Motor',
-      price: 0,
+      name: '5HP IE3 3000 RPM',
+      price: 49999,
       image: 'InductionMotor.png',
       sales: 0
     },
     {
       id: '4',
-      name: 'Pressure Booster',
-      price: 0,
+      name: 'Pressure Booster V24',
+      price: 24999,
       image: 'Pressure Booster.png',
       sales: 0
     },
     {
       id: '5',
       name: 'Cable',
-      price: 0,
+      price: 999,
       image: 'Cables.png',
       sales: 0
     },
@@ -448,12 +448,10 @@ const DashboardPage: React.FC = () => {
                   <Typography variant="subtitle1" noWrap sx={{ textAlign: 'center' }}>
                     {product.name}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center' }}>
+                  <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', fontSize: '1rem', fontWeight: 'bold' }}>
                     {formatINR(product.price)}
                   </Typography>
-                  <Typography variant="caption" color="primary" sx={{ textAlign: 'center', display: 'block' }}>
-                    {product.sales} sold
-                  </Typography>
+                  {/* Sales count removed as per user request */}
                 </CardContent>
               </Card>
               ))}
