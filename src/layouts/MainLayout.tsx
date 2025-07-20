@@ -192,7 +192,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               {/* Left Column - Company Info and Business Hours */}
               <Box sx={{ maxWidth: '100%', pl: { md: 6 } }}>
                 <Box sx={{ mb: 2 }}>
-                  <Typography variant="h6" gutterBottom fontWeight={700}>
+                  <Typography variant="h6" gutterBottom fontWeight={800} color="primary">
                     Uttam Corporation
                   </Typography>
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
@@ -200,7 +200,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                   </Typography>
                 </Box>
                 <Box>
-                  <Typography variant="subtitle1" fontWeight={600} fontSize={18} gutterBottom>
+                  <Typography variant="subtitle1" fontWeight={800} fontSize={18} gutterBottom color="primary">
                     Business Hours
                   </Typography>
                   <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
@@ -214,7 +214,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
               {/* Right Column - Contact Info */}
               <Box sx={{ maxWidth: '100%', ml: { md: 30 }, mr: { md: 0 } }}>
-                <Typography variant="body1" color="text.secondary" sx={{ mb: 1.5, fontWeight: 700, fontSize: '1.1rem' }}>
+                <Typography variant="body1" color="primary" sx={{ mb: 1.5, fontWeight: 800, fontSize: '1.1rem' }}>
                   Ashok Chopra
                 </Typography>
                 <Box sx={{ 
@@ -233,8 +233,23 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                     flexShrink: 0
                   }
                 }}>
-                  <Typography variant="body2" color="text.secondary">
-                    <LocationOn fontSize="small" />
+                  <Typography 
+                    variant="body2" 
+                    component="a"
+                    href="https://maps.app.goo.gl/CdZk77cpA5kLrkfH8"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                      display: 'flex',
+                      color: 'text.secondary',
+                      textDecoration: 'none',
+                      '&:hover': {
+                        color: 'primary.main',
+                        textDecoration: 'underline'
+                      }
+                    }}
+                  >
+                    <LocationOn fontSize="small" sx={{ mt: '2px' }} />
                     <span>
                       B-30 Karnavati Estate, G.I.D.C, Phase 3,<br />
                       Vatva, Ahmedabad - 382445,<br />
