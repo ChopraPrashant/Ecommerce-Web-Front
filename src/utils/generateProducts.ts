@@ -448,7 +448,7 @@ const inductionMotors: IProduct[] = [
 // Cables
 const cables: IProduct[] = [
   createProduct({
-    name: 'Polycab 4 Sq.mm 90m FR PVC Cable',
+    name: 'Polycab 4 Sq.mm 90m FR PVC',
     slug: 'polycab-4sqmm-fr-pvc-cable',
     description: '4 Sq.mm 3.5 Core 90m FR PVC Copper Cable. Fire retardant and suitable for domestic and industrial wiring.',
     shortDescription: '4 Sq.mm 3.5 Core FR PVC Cable',
@@ -466,12 +466,12 @@ const cables: IProduct[] = [
     categories: [categories[2]],
     tags: ['copper', 'fr-pvc'],
     images: [
-      { url: '/images/products/cables/polycab-4sqmm.jpg', alt: 'Polycab 4 Sq.mm Cable', isPrimary: true }
+      { url: '/Cables.png', alt: 'Polycab 4 Sq.mm Cable', isPrimary: true }
     ],
     reviews: []
   }),
   createProduct({
-    name: 'Finolex 1.5 Sq.mm 90m FR PVC Cable',
+    name: 'Finolex 1.5 Sq.mm 90m FR PVC',
     slug: 'finolex-1.5sqmm-fr-pvc-cable',
     description: '1.5 Sq.mm 2 Core 90m FR PVC Copper Cable. Fire retardant and suitable for domestic wiring.',
     shortDescription: '1.5 Sq.mm 2 Core FR PVC Cable',
@@ -489,7 +489,7 @@ const cables: IProduct[] = [
     categories: [categories[2]],
     tags: ['copper', 'fr-pvc'],
     images: [
-      { url: '/images/products/cables/finolex-1.5sqmm.jpg', alt: 'Finolex 1.5 Sq.mm Cable', isPrimary: true }
+      { url: '/cable1.png', alt: 'Finolex 1.5 Sq.mm Cable', isPrimary: true }
     ],
     reviews: []
   }),
@@ -512,12 +512,12 @@ const cables: IProduct[] = [
     categories: [categories[2]],
     tags: ['copper', 'armoured', 'underground'],
     images: [
-      { url: '/images/products/cables/polycab-25sqmm-armoured.jpg', alt: 'Polycab 25 Sq.mm Armoured Cable', isPrimary: true }
+      { url: '/cable.png', alt: 'Polycab 25 Sq.mm Armoured Cable', isPrimary: true }
     ],
     reviews: []
   }),
   createProduct({
-    name: 'Finolex 1.0 Sq.mm 90m FR PVC Cable',
+    name: 'Finolex 1.0 Sq.mm 90m FR PVC',
     slug: 'finolex-1.0sqmm-fr-pvc-cable',
     description: '1.0 Sq.mm 2 Core 90m FR PVC Copper Cable. Ideal for lighting circuits and domestic wiring.',
     shortDescription: '1.0 Sq.mm 2 Core FR PVC Cable',
@@ -535,7 +535,7 @@ const cables: IProduct[] = [
     categories: [categories[2]],
     tags: ['copper', 'fr-pvc'],
     images: [
-      { url: '/images/products/cables/finolex-1.0sqmm.jpg', alt: 'Finolex 1.0 Sq.mm Cable', isPrimary: true }
+      { url: '/cable2.png', alt: 'Finolex 1.0 Sq.mm Cable', isPrimary: true }
     ],
     reviews: []
   })
