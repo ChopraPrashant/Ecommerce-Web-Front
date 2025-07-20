@@ -192,7 +192,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               {/* Left Column - Company Info and Business Hours */}
               <Box sx={{ maxWidth: '100%', pl: { md: 6 } }}>
                 <Box sx={{ mb: 2 }}>
-                  <Typography variant="h6" gutterBottom fontWeight={800} color="primary">
+                  <Typography variant="h6" gutterBottom fontWeight={800} color="primary" sx={{ fontSize: '1.35rem' }}>
                     Uttam Corporation
                   </Typography>
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
