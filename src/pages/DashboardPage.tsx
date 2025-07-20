@@ -219,14 +219,22 @@ const DashboardPage: React.FC = () => {
           objectFit: 'cover',
           display: 'block',
           backgroundColor: '#f5f5f5',
-          mt: 4,
+          mt: { xs: 0, sm: 4 },
+          mb: { xs: 0, sm: 0 },
+          pt: { xs: 0, sm: 0 },
+          pb: { xs: 0, sm: 0 },
           ml: { xs: 0, sm: 2 },
           mx: { xs: 'auto', sm: 'unset' },
           borderRadius: 1,
           '@media (max-width: 600px)': {
             width: '100%',
             objectFit: 'contain',
-            backgroundColor: 'transparent'
+            backgroundColor: 'transparent',
+            height: '280px',
+            mt: 0,
+            mb: 0,
+            pt: 0,
+            pb: 0
           }
         }}
       />
