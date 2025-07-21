@@ -431,27 +431,7 @@ const DashboardPage: React.FC = () => {
           </Box>
         </Box>
         
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <IconButton 
-            onClick={() => scroll('left')}
-            disabled={isFirstPage}
-            sx={{
-              backgroundColor: 'background.paper',
-              boxShadow: 1,
-              '&:hover': {
-                backgroundColor: 'action.hover',
-              },
-              flexShrink: 0,
-              width: 40,
-              height: 40,
-              opacity: isFirstPage ? 0.5 : 1,
-              cursor: isFirstPage ? 'not-allowed' : 'pointer'
-            }}
-          >
-            <ChevronLeft />
-          </IconButton>
-          
-          <Box sx={{ flex: 1, overflow: 'hidden' }}>
+        <Box sx={{ width: '100%' }}>
             <Box 
               ref={scrollContainerRef}
               sx={{
@@ -461,14 +441,23 @@ const DashboardPage: React.FC = () => {
                 gap: 3,
                 py: 2,
                 px: 1,
-                overflow: 'hidden',
+                overflowX: 'auto',
                 scrollBehavior: 'smooth',
                 '&::-webkit-scrollbar': {
-                  display: 'none',
+                  display: { xs: 'none', sm: 'block' },
+                  height: '6px',
                 },
-                msOverflowStyle: 'none',
-                scrollbarWidth: 'none',
+                '&::-webkit-scrollbar-track': {
+                  background: 'transparent',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  backgroundColor: 'rgba(0,0,0,0.2)',
+                  borderRadius: '3px',
+                },
+                msOverflowStyle: { xs: 'none', sm: 'auto' },
+                scrollbarWidth: { xs: 'none', sm: 'thin' },
                 width: '100%',
+                WebkitOverflowScrolling: 'touch', // For smooth scrolling on iOS
               }}
           >
             {bestSellingProducts.map((product) => (
@@ -530,26 +519,6 @@ const DashboardPage: React.FC = () => {
               </Card>
               ))}
             </Box>
-          </Box>
-          
-          <IconButton 
-            onClick={() => scroll('right')}
-            disabled={isLastPage}
-            sx={{
-              backgroundColor: 'background.paper',
-              boxShadow: 1,
-              '&:hover': {
-                backgroundColor: 'action.hover',
-              },
-              flexShrink: 0,
-              width: 40,
-              height: 40,
-              opacity: isLastPage ? 0.5 : 1,
-              cursor: isLastPage ? 'not-allowed' : 'pointer'
-            }}
-          >
-            <ChevronRight />
-          </IconButton>
         </Box>
         </Box>
       </Container>
