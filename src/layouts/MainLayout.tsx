@@ -391,12 +391,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 width: '100%',
                 boxSizing: 'border-box',
                 px: { xs: 2, sm: 0 },
-                mt: { xs: 4, md: 0 },
+                mt: { xs: 0, md: 0 }, // Reduced from 4 to 1 for mobile
               }}>
                 <Typography variant="body1" color="primary" sx={{ 
-                  mb: 1.5, 
+                  mb: { xs: 0.5, md: 0 }, 
                   fontWeight: 800, 
-                  fontSize: '1.1rem',
+                  fontSize: '1.2rem',
                   textAlign: { xs: 'center', md: 'left' }
                 }}>
                   Ashok Chopra

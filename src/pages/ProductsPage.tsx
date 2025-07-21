@@ -202,119 +202,155 @@ const ProductsPage: React.FC = () => {
         </Box>
 
         {/* View Toggle, Categories, and Sort */}
-        <Box mb={3} display="flex" flexWrap="wrap" gap={2} alignItems="center" width="100%" position="relative">
-          <Box display="flex" alignItems="center" position="absolute" left={0}>
-            <ToggleButtonGroup
-              value={viewMode}
-              exclusive
-              onChange={(e, newViewMode) => newViewMode && setViewMode(newViewMode)}
-              aria-label="view mode"
-              size="small"
-            >
-              <ToggleButton value="grid" aria-label="grid view">
-                <GridViewIcon />
-              </ToggleButton>
-              <ToggleButton value="list" aria-label="list view">
-                <ViewListIcon />
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </Box>
+        <Box mb={3} width="100%">
+          {/* First Row: View Toggle and Sort Dropdown */}
+          <Box 
+            display="flex" 
+            justifyContent="space-between" 
+            alignItems="center" 
+            width="100%"
+            mb={2}
+            sx={{
+              flexDirection: { xs: 'row', sm: 'row' },
+              gap: { xs: 1, sm: 2 }
+            }}
+          >
+            <Box display="flex" alignItems="center">
+              <ToggleButtonGroup
+                value={viewMode}
+                exclusive
+                onChange={(e, newViewMode) => newViewMode && setViewMode(newViewMode)}
+                aria-label="view mode"
+                size="small"
+              >
+                <ToggleButton value="grid" aria-label="grid view">
+                  <GridViewIcon />
+                </ToggleButton>
+                <ToggleButton value="list" aria-label="list view">
+                  <ViewListIcon />
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </Box>
 
-          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-            <Box display="flex" gap={1} sx={{ my: { xs: 1, sm: 0 } }}>
-            <Button 
-              variant={category === 'water-pumps' ? 'contained' : 'outlined'} 
-              size="small"
-              onClick={() => navigate('/products?category=water-pumps')}
-              sx={{ 
-                textTransform: 'none',
-                '&.MuiButton-contained': {
-                  bgcolor: '#42a5f5',
-                  '&:hover': {
-                    bgcolor: '#1e88e5',
-                  },
-                },
-                '&.MuiButton-outlined': {
-                  color: '#1976d2',
-                  borderColor: '#90caf9',
-                  '&:hover': {
-                    borderColor: '#42a5f5',
-                    bgcolor: 'rgba(66, 165, 245, 0.04)'
-                  },
-                }
-              }}
-            >
-              Pumps
-            </Button>
-            <Button 
-              variant={category === 'induction-motors' ? 'contained' : 'outlined'} 
-              size="small"
-              onClick={() => navigate('/products?category=induction-motors')}
-              sx={{ 
-                textTransform: 'none',
-                '&.MuiButton-contained': {
-                  bgcolor: '#42a5f5',
-                  '&:hover': {
-                    bgcolor: '#1e88e5',
-                  },
-                },
-                '&.MuiButton-outlined': {
-                  color: '#1976d2',
-                  borderColor: '#90caf9',
-                  '&:hover': {
-                    borderColor: '#42a5f5',
-                    bgcolor: 'rgba(66, 165, 245, 0.04)'
-                  },
-                }
-              }}
-            >
-              Motors
-            </Button>
-            <Button 
-              variant={category === 'cables' ? 'contained' : 'outlined'} 
-              size="small"
-              onClick={() => navigate('/products?category=cables')}
-              sx={{ 
-                textTransform: 'none',
-                '&.MuiButton-contained': {
-                  bgcolor: '#42a5f5',
-                  '&:hover': {
-                    bgcolor: '#1e88e5',
-                  },
-                },
-                '&.MuiButton-outlined': {
-                  color: '#1976d2',
-                  borderColor: '#90caf9',
-                  '&:hover': {
-                    borderColor: '#42a5f5',
-                    bgcolor: 'rgba(66, 165, 245, 0.04)'
-                  },
-                }
-              }}
-            >
-              Cables
-            </Button>
+            <Box minWidth={150}>
+              <FormControl fullWidth size="small" variant="outlined">
+                <InputLabel id="sort-by-label">Sort By</InputLabel>
+                <Select
+                  labelId="sort-by-label"
+                  id="sort-by-select"
+                  value={filters.sortBy}
+                  label="Sort By"
+                  onChange={(e) => handleSortChange(e.target.value as string)}
+                  sx={{
+                    '& .MuiSelect-select': {
+                      py: 1,
+                      fontSize: '0.875rem',
+                    },
+                  }}
+                >
+                  <MenuItem value="featured">Featured</MenuItem>
+                  <MenuItem value="latest">Latest</MenuItem>
+                  <MenuItem value="price-low">Price: Low to High</MenuItem>
+                  <MenuItem value="price-high">Price: High to Low</MenuItem>
+                  <MenuItem value="name-asc">Name: A to Z</MenuItem>
+                  <MenuItem value="name-desc">Name: Z to A</MenuItem>
+                  <MenuItem value="top-rated">Top Rated</MenuItem>
+                </Select>
+              </FormControl>
             </Box>
           </Box>
 
-          <Box position="absolute" right={0}>
-            <FormControl variant="outlined" size="small" sx={{ minWidth: 200 }}>
-              <InputLabel id="sort-by-label">Sort By</InputLabel>
-              <Select
-                labelId="sort-by-label"
-                value={filters.sortBy}
-                onChange={(e) => handleSortChange(e.target.value as string)}
-                label="Sort By"
+          {/* Second Row: Category Buttons */}
+          <Box 
+            width="100%" 
+            sx={{
+              overflowX: 'auto',
+              whiteSpace: 'nowrap',
+              py: 1,
+              '&::-webkit-scrollbar': {
+                display: 'none',
+              },
+              msOverflowStyle: 'none',
+              scrollbarWidth: 'none',
+            }}
+          >
+            <Box display="flex" gap={1} justifyContent={{ xs: 'flex-start', sm: 'center' }}>
+              <Button 
+                variant={category === 'water-pumps' ? 'contained' : 'outlined'} 
+                size="small"
+                onClick={() => navigate('/products?category=water-pumps')}
+                sx={{ 
+                  textTransform: 'none',
+                  whiteSpace: 'nowrap',
+                  '&.MuiButton-contained': {
+                    bgcolor: '#42a5f5',
+                    '&:hover': {
+                      bgcolor: '#1e88e5',
+                    },
+                  },
+                  '&.MuiButton-outlined': {
+                    color: '#1976d2',
+                    borderColor: '#90caf9',
+                    '&:hover': {
+                      borderColor: '#42a5f5',
+                      bgcolor: 'rgba(66, 165, 245, 0.04)'
+                    },
+                  }
+                }}
               >
-                <MenuItem value="featured">Featured</MenuItem>
-                <MenuItem value="latest">Latest</MenuItem>
-                <MenuItem value="price-low">Price: Low to High</MenuItem>
-                <MenuItem value="price-high">Price: High to Low</MenuItem>
-                <MenuItem value="name-asc">Name: A to Z</MenuItem>
-                <MenuItem value="name-desc">Name: Z to A</MenuItem>
-                <MenuItem value="top-rated">Top Rated</MenuItem>
-              </Select>
-            </FormControl>
+                Pumps
+              </Button>
+              <Button 
+                variant={category === 'induction-motors' ? 'contained' : 'outlined'} 
+                size="small"
+                onClick={() => navigate('/products?category=induction-motors')}
+                sx={{ 
+                  textTransform: 'none',
+                  whiteSpace: 'nowrap',
+                  '&.MuiButton-contained': {
+                    bgcolor: '#42a5f5',
+                    '&:hover': {
+                      bgcolor: '#1e88e5',
+                    },
+                  },
+                  '&.MuiButton-outlined': {
+                    color: '#1976d2',
+                    borderColor: '#90caf9',
+                    '&:hover': {
+                      borderColor: '#42a5f5',
+                      bgcolor: 'rgba(66, 165, 245, 0.04)'
+                    },
+                  }
+                }}
+              >
+                Motors
+              </Button>
+              <Button 
+                variant={category === 'cables' ? 'contained' : 'outlined'} 
+                size="small"
+                onClick={() => navigate('/products?category=cables')}
+                sx={{ 
+                  textTransform: 'none',
+                  whiteSpace: 'nowrap',
+                  '&.MuiButton-contained': {
+                    bgcolor: '#42a5f5',
+                    '&:hover': {
+                      bgcolor: '#1e88e5',
+                    },
+                  },
+                  '&.MuiButton-outlined': {
+                    color: '#1976d2',
+                    borderColor: '#90caf9',
+                    '&:hover': {
+                      borderColor: '#42a5f5',
+                      bgcolor: 'rgba(66, 165, 245, 0.04)'
+                    },
+                  }
+                }}
+              >
+                Cables
+              </Button>
+            </Box>
           </Box>
         </Box>
 
