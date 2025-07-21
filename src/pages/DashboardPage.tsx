@@ -395,25 +395,40 @@ const DashboardPage: React.FC = () => {
       
       {/* Best Selling Products */}
       <Box sx={{ mt: 6, mb: 4 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-          <Typography variant="h4" component="h2" gutterBottom sx={{ fontWeight: 'bold' }}>
-            Best Selling Products
-          </Typography>
-          <IconButton 
-            color="primary" 
-            aria-label="View Cart"
-            onClick={() => navigate('/cart')}
-            sx={{
-              p: 1,
-              border: '1px solid',
-              borderColor: 'divider',
-              '&:hover': {
-                backgroundColor: 'action.hover'
-              }
+        <Box sx={{ 
+          display: 'flex', 
+          justifyContent: { xs: 'center', sm: 'space-between' }, 
+          alignItems: 'center', 
+          mb: 2 
+        }}>
+          <Typography 
+            variant="h4" 
+            component="h2" 
+            gutterBottom 
+            sx={{ 
+              fontWeight: 'bold',
+              fontSize: { xs: '1.5rem', sm: '2.125rem' } // Smaller on mobile, normal on desktop
             }}
           >
-            <ShoppingCartOutlined />
-          </IconButton>
+            Best Selling Products
+          </Typography>
+          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+            <IconButton 
+              color="primary" 
+              aria-label="View Cart"
+              onClick={() => navigate('/cart')}
+              sx={{
+                p: 1,
+                border: '1px solid',
+                borderColor: 'divider',
+                '&:hover': {
+                  backgroundColor: 'action.hover'
+                }
+              }}
+            >
+              <ShoppingCartOutlined />
+            </IconButton>
+          </Box>
         </Box>
         
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
