@@ -15,6 +15,7 @@ import {
   Select,
   Pagination,
 } from '@mui/material';
+import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import {
   ViewList as ViewListIcon,
   GridView as GridViewIcon,
@@ -335,6 +336,99 @@ const ProductsPage: React.FC = () => {
             itemsPerPage={filters.limit}
             cartItems={cart?.items.map(item => item.product) || []}
           />
+        </Box>
+      </Box>
+      
+      {/* Stylish Message Section */}
+      <Box 
+        sx={{
+          mt: 0,
+          mb: 6,
+          p: 4,
+          background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+          borderRadius: 3,
+          textAlign: 'center',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+          position: 'relative',
+          overflow: 'hidden',
+          '&:before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: 4,
+            background: 'linear-gradient(90deg, #1976d2 0%, #42a5f5 100%)',
+          }
+        }}
+      >
+        <Box 
+          component="span"
+          sx={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 60,
+            height: 60,
+            borderRadius: '50%',
+            bgcolor: 'primary.main',
+            color: 'white',
+            mb: 3,
+            boxShadow: '0 4px 12px rgba(25, 118, 210, 0.3)'
+          }}
+        >
+          <ShoppingBagOutlinedIcon sx={{ fontSize: 32 }} />
+        </Box>
+        <Typography 
+          variant="h6"
+          component="p"
+          sx={{
+            fontWeight: 600,
+            color: 'text.primary',
+            mb: 2,
+            maxWidth: '600px',
+            mx: 'auto',
+            lineHeight: 1.4,
+            fontSize: { xs: '1.1rem', sm: '1.25rem' }
+          }}
+        >
+          Explore our Complete Collection with Detailed Specifications ~ Just a Call or Message away!
+        </Typography>
+        <Box sx={{ mt: 3, display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Button 
+            variant="contained"
+            color="primary"
+            sx={{ 
+              textTransform: 'none',
+              px: 4,
+              py: 1,
+              fontWeight: 500,
+              boxShadow: '0 4px 12px rgba(25, 118, 210, 0.3)',
+              '&:hover': {
+                boxShadow: '0 6px 16px rgba(25, 118, 210, 0.4)'
+              }
+            }}
+            onClick={() => window.location.href = 'tel:+919426029094'}
+          >
+            Call Now
+          </Button>
+          <Button 
+            variant="outlined"
+            color="primary"
+            sx={{ 
+              textTransform: 'none',
+              px: 4,
+              py: 1,
+              fontWeight: 500,
+              borderWidth: '2px',
+              '&:hover': {
+                borderWidth: '2px'
+              }
+            }}
+            onClick={() => window.location.href = 'mailto:uttam.corp@gmail.com'}
+          >
+            Email Us
+          </Button>
         </Box>
       </Box>
     </Container>
