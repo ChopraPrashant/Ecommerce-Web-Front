@@ -249,6 +249,7 @@ const CartPage: React.FC = () => {
           <React.Fragment key={item._id}>
             <Box sx={{ 
               display: 'flex', 
+              flexDirection: { xs: 'column', sm: 'row' },
               alignItems: { xs: 'flex-start', sm: 'center' }, 
               py: 3,
               position: 'relative',
@@ -256,12 +257,19 @@ const CartPage: React.FC = () => {
               '&:hover': {
                 backgroundColor: 'action.hover',
                 borderRadius: 1
+              },
+              '&:not(:last-child)': {
+                borderBottom: '1px solid',
+                borderColor: 'divider',
+                pb: 3,
+                mb: 2
               }
             }}>
               <Box sx={{ 
-                width: { xs: 80, sm: 100 }, 
-                height: { xs: 80, sm: 100 }, 
-                mr: { xs: 2, sm: 3 }, 
+                width: { xs: '100%', sm: 100 }, 
+                height: { xs: 140, sm: 100 }, 
+                mb: { xs: 2, sm: 0 },
+                mr: { xs: 0, sm: 3 }, 
                 flexShrink: 0,
                 position: 'relative',
                 overflow: 'hidden',
@@ -307,15 +315,6 @@ const CartPage: React.FC = () => {
                   >
                     {item.name}
                   </Typography>
-                  {item.sku && (
-                    <Typography 
-                      variant="body2" 
-                      color="text.secondary"
-                      sx={{ fontSize: '0.8rem' }}
-                    >
-                      SKU: {item.sku}
-                    </Typography>
-                  )}
                   {item.stock !== undefined && (
                     <Typography 
                       variant="caption" 
@@ -356,11 +355,14 @@ const CartPage: React.FC = () => {
               <Box sx={{ 
                 display: 'flex', 
                 alignItems: 'center', 
-                mx: { xs: 1, sm: 3 },
+                mx: { xs: 0, sm: 3 },
                 bgcolor: 'action.hover',
                 borderRadius: 1.5,
                 px: 1,
-                py: 0.5
+                py: 0.5,
+                mt: { xs: 1, sm: 0 },
+                width: { xs: '100%', sm: 'auto' },
+                justifyContent: 'space-between'
               }}>
                 <IconButton 
                   onClick={() => handleQuantityChange(item._id, (item.quantity || 0) - 1)}
@@ -402,9 +404,11 @@ const CartPage: React.FC = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'flex-end',
-                minWidth: { xs: 'auto', sm: 120 },
+                minWidth: { xs: '100%', sm: 120 },
                 pl: { xs: 0, sm: 2 },
-                mr: { xs: 0, sm: 1 }
+                mr: { xs: 0, sm: 1 },
+                mt: { xs: 1, sm: 0 },
+                order: { xs: 3, sm: 'initial' }
               }}>
                 <Typography 
                   variant="subtitle1" 
@@ -445,16 +449,25 @@ const CartPage: React.FC = () => {
               <IconButton 
                 onClick={() => handleRemove(item._id)}
                 color="error"
-                size="small"
+                size="medium"
                 sx={{
-                  ml: { xs: 1, sm: 2 },
+                  ml: { xs: 0, sm: 2 },
+                  mt: { xs: 1, sm: 0 },
                   '&:hover': {
                     backgroundColor: 'error.light',
                     color: 'error.dark'
+                  },
+                  position: { xs: 'absolute', sm: 'static' },
+                  right: { xs: 8, sm: 'auto' },
+                  top: { xs: 8, sm: 'auto' },
+                  bgcolor: { xs: 'rgba(255, 255, 255, 0.9)', sm: 'transparent' },
+                  boxShadow: { xs: '0 2px 8px rgba(0,0,0,0.1)', sm: 'none' },
+                  '&:active': {
+                    transform: 'scale(0.95)'
                   }
                 }}
               >
-                <Delete fontSize="small" />
+                <Delete fontSize={window.innerWidth < 600 ? 'medium' : 'small'} />
               </IconButton>
             </Box>
             <Divider sx={{ 
