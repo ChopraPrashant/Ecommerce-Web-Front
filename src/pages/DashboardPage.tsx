@@ -96,7 +96,7 @@ const DashboardPage: React.FC = () => {
       id: '6',
       name: 'STPM22(1PH)-15 2HP',
       price: 24999,
-      image: 'STPM22.png',
+      image: 'Stpm22.png',
       sales: 0
     },
     {

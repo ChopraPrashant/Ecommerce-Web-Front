@@ -29,9 +29,10 @@
   "homepage": "https://uttamcorporation.com",
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && npm run copy-sitemap",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "copy-sitemap": "cp src/sitemap.xml public/sitemap.xml",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },

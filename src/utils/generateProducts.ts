@@ -214,7 +214,7 @@ const waterPumps: IProduct[] = [
     categories: [categories[0]],
     tags: ['agricultural', 'dewatering'],
     images: [
-      { url: '/owe052.png', alt: 'Crompton OWE052(1PH)Z-21FS', isPrimary: true }
+      { url: '/OWE052.png', alt: 'Crompton OWE052(1PH)Z-21FS', isPrimary: true }
     ],
     reviews: []
   }),
@@ -380,7 +380,7 @@ const inductionMotors: IProduct[] = [
     categories: [categories[1]],
     tags: ['industrial', '3-phase'],
     images: [
-      { url: '/inductionmotor.png', alt: 'Bharat Bijlee 3HP Motor', isPrimary: true }
+      { url: '/InductionMotor.png', alt: 'Bharat Bijlee 3HP Motor', isPrimary: true }
     ],
     reviews: []
   }),
